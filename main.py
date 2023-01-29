@@ -1,13 +1,10 @@
 import cv2
+import time
 import math as m
 import mediapipe as mp
 from sms import sentsms
 
-# Initilize medipipe selfie segmentation class.
-mp_pose = mp.solutions.pose
-mp_holistic = mp.solutions.holistic
-
-# the setup REQUIRES the person to be in the proper side view
+# the setup REQUIRES the person to be in the proper side view.
 def findDistance(x1, y1, x2, y2):
     dist = m.sqrt((x2-x1)**2+(y2-y1)**2)
     return dist
@@ -21,6 +18,10 @@ def findAngle(x1, y1, x2, y2):
 # Initilize frame counters.
 good_frames = 0
 bad_frames = 0
+
+# Initilize FPS counters.
+fps_start_time = 0
+fps = 0
 
 # Font type.
 font = cv2.FONT_HERSHEY_SIMPLEX
@@ -38,17 +39,24 @@ pink = (255, 0, 255)
 mp_pose = mp.solutions.pose
 pose = mp_pose.Pose()
 
-# Open the default camera
+# Open the default camera. If you have a black screen try out 1, 2.. and so on.
 cap = cv2.VideoCapture(0)
 
+# This while loop returns the live feed.
 while True:
-    # Capture frame-by-frame
+    # Capture frame-by-frame.
     ret, frame = cap.read()
+
+    # Since we are using a live feed, we need to calculate the FPS ourselves. This is necessary for calculating the time your posture has been good or bad.
+    fps_end_time = time.time()
+    time_diff = fps_end_time - fps_start_time
+    fps = 1 /(time_diff)
+    fps_start_time = fps_end_time
+
+    # to exit the program use q.
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
-        
-    # get fps
-    fps = cap.get(cv2.CAP_PROP_FPS)
+
     # Get height and width.
     h, w = frame.shape[:2]
     
@@ -71,7 +79,7 @@ while True:
         # Left shoulder.
         l_shldr_x = int(lm.landmark[lmPose.LEFT_SHOULDER].x * w)
         l_shldr_y = int(lm.landmark[lmPose.LEFT_SHOULDER].y * h)
-        # Right shoulder
+        # Right shoulder.
         r_shldr_x = int(lm.landmark[lmPose.RIGHT_SHOULDER].x * w)
         r_shldr_y = int(lm.landmark[lmPose.RIGHT_SHOULDER].y * h)
         # Left ear.
@@ -83,8 +91,7 @@ while True:
         # Calculate distance between left shoulder and right shoulder points.
         offset = findDistance(l_shldr_x, l_shldr_y, r_shldr_x, r_shldr_y)
         
-            # Assist to align the camera to point at the side view of the person.
-        # Offset threshold 30 is based on results obtained from analysis over 100 samples.
+        # Assist to align the camera to point at the side view of the person.
         if offset < 100:
             cv2.putText(image, str(int(offset)) + ' Aligned', (w - 150, 30), font, 0.9, green, 2)
         else:
@@ -98,14 +105,10 @@ while True:
         cv2.circle(image, (l_shldr_x, l_shldr_y), 7, yellow, -1)
         cv2.circle(image, (l_ear_x, l_ear_y), 7, yellow, -1)       
         
-        # Let's take y - coordinate of P3 100px above x1,  for display elegance.
-        # Although we are taking y = 0 while calculating angle between P1,P2,P3.
         cv2.circle(image, (l_shldr_x, l_shldr_y - 100), 7, yellow, -1)
         cv2.circle(image, (r_shldr_x, r_shldr_y), 7, pink, -1)
         cv2.circle(image, (l_hip_x, l_hip_y), 7, yellow, -1)
 
-        # Similarly, here we are taking y - coordinate 100px above x1. Note that
-        # you can take any value for y, not necessarily 100 or 200 pixels.
         cv2.circle(image, (l_hip_x, l_hip_y - 100), 7, yellow, -1)
 
         # Put text, Posture and angle inclination.
@@ -113,8 +116,8 @@ while True:
         angle_text_string = 'Neck : ' + str(int(neck_inclination)) + '  Torso : ' + str(int(torso_inclination))
 
         # Determine whether good posture or bad posture.
-        # The threshold angles have been set based on intuition.
-        if neck_inclination < 40 and torso_inclination < 20:
+        # The threshold angles have been set and changed based on testing. This could be different for you.
+        if neck_inclination < 30 and torso_inclination < 20:
             bad_frames = 0
             good_frames += 1
 
@@ -122,7 +125,7 @@ while True:
             cv2.putText(image, str(int(neck_inclination)), (l_shldr_x + 10, l_shldr_y), font, 0.9, light_green, 2)
             cv2.putText(image, str(int(torso_inclination)), (l_hip_x + 10, l_hip_y), font, 0.9, light_green, 2)
 
-            # Join landmarks.
+            # Join landmarks with a line.
             cv2.line(image, (l_shldr_x, l_shldr_y), (l_ear_x, l_ear_y), green, 4)
             cv2.line(image, (l_shldr_x, l_shldr_y), (l_shldr_x, l_shldr_y - 100), green, 4)
             cv2.line(image, (l_hip_x, l_hip_y), (l_shldr_x, l_shldr_y), green, 4)
@@ -136,7 +139,7 @@ while True:
             cv2.putText(image, str(int(neck_inclination)), (l_shldr_x + 10, l_shldr_y), font, 0.9, red, 2)
             cv2.putText(image, str(int(torso_inclination)), (l_hip_x + 10, l_hip_y), font, 0.9, red, 2)
 
-            # Join landmarks.
+            # Join landmarks with a line.
             cv2.line(image, (l_shldr_x, l_shldr_y), (l_ear_x, l_ear_y), red, 4)
             cv2.line(image, (l_shldr_x, l_shldr_y), (l_shldr_x, l_shldr_y - 100), red, 4)
             cv2.line(image, (l_hip_x, l_hip_y), (l_shldr_x, l_shldr_y), red, 4)
@@ -146,8 +149,6 @@ while True:
         good_time = (1 / fps) * good_frames
         bad_time =  (1 / fps) * bad_frames
         
-        #print("good frames"+ str(good_frames))
-        #print("bad frames"+ str(bad_frames))
         # Pose time.
         if good_time > 0:
             time_string_good = 'Good Posture Time : ' + str(round(good_time, 1)) + 's'
@@ -156,17 +157,20 @@ while True:
             time_string_bad = 'Bad Posture Time : ' + str(round(bad_time, 1)) + 's'
             cv2.putText(image, time_string_bad, (10, h - 20), font, 0.9, red, 2)
 
-        # If you stay in bad posture for more than 3 minutes (180s) send an alert. Right now it's 10 sec for testing purposes
+        # If you stay in bad posture for more than 3 minutes (180s) send an alert. Right now it's 10s for testing purposes
         if bad_time > 10:
+            # This is the warning method. It is possible to change this to any type of messaging bot you want. for example telegram bot, discord bot, whatsapp bot.
             sentsms()
+
+            #reset the frames and timer
             bad_frames = 0
     else:
-        #no person in frame
+        #no person in frame.
         print("No person found!")
 
-    # Display the image with drawings
+    # Display the image with drawings.
     cv2.imshow('Camera Output', image)
 
-# When everything is done, release the capture and close window
+# When everything is done, release the capture and close window.
 cap.release()
 cv2.destroyAllWindows()

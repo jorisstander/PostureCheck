@@ -32,8 +32,8 @@ Now that everything is set up, you can run the program. Make sure you have your 
 Run the script using the command `python posture_detection.py`
 The script will begin monitoring the side-view of a person and will calculate the neck and torso inclination. If poor body posture is detected, a text message will be sent to the configured phone number after a certain amount of time.
 
-##Note
+## Note
 Make sure to use the compatible version of the packages with your python version.
 
-##Conclusion
+## Conclusion
 This project uses Mediapipe and OpenCV to detect poor body posture and alert the user via text message. By using a Raspberry Pi and a webcam, the project is able to monitor the side-view of a person and calculate the neck and torso inclination in real-time.

@@ -22,6 +22,13 @@ So far, the project had progressed smoothly, but installing it on the Raspberry 
 ### Running the program on the raspberry pi 
 When I first ran the program, I unfortunately discovered that the camera's frame rate was very poor. Additionally, there was an issue with the duration of poor posture. Typically, a SMS would be sent after 10 seconds, however, this 10 seconds was taking almost a full minute. I discovered that the function to get the FPS of OpenCV does not work on a live-feed and will always return 30 fps. This meant that the program was calculating the time with 30 fps, even when the actual FPS was much lower, such as 5. This caused the time to be 6 times slower in the program. I was able to fix this problem by calculating the FPS for each frame individually.
 
+## Requirements
+* Raspberry Pi 4
+* Webcam or camera for Raspberry Pi
+* Phone number for receiving text messages
+* Twilio trial account
+* Raspbian Buster OS
+* Python v3.7.3 or above
 ## Installation
 
 It is recommended to use a virtual environment for your python packages. You also **NEED** Raspbian Buster OS.

@@ -1,6 +1,8 @@
 # PostureCheck
 
-This is the final project for Datascience for Iot.
+This is the final project for the subject 'Datascience for IoT'. With the help of OpenCV and its documentation on poor posture detection, it has been possible to create and modify examples to a working live-feed poor posture detection program. By adding a live-feed, SMS notification service, and changes in the code, this prototype will notify you via SMS whenever your posture has been poor for 3 minutes.
+
+## Demo
 
 ## Installation
 
@@ -33,7 +35,7 @@ Run the script using the command `python posture_detection.py`
 The script will begin monitoring the side-view of a person and will calculate the neck and torso inclination. If poor body posture is detected, a text message will be sent to the configured phone number after a certain amount of time.
 
 ## Note
-Make sure to use the compatible version of the packages with your python version.
+Make sure to use the compatible version of the packages with your python version. For more info about the code, check out the comments in the code.
 
 ## Conclusion
 This project uses Mediapipe and OpenCV to detect poor body posture and alert the user via text message. By using a Raspberry Pi and a webcam, the project is able to monitor the side-view of a person and calculate the neck and torso inclination in real-time.

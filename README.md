@@ -2,27 +2,18 @@
 
 This is the final project for Datascience for Iot.
 
-## How to Setup?
+## Installation
 
-Make sure you have **pip** installed!
+It is recommended to use a virtual environment for your python packages. You also **NEED** Raspbian Buster OS.
 
-First of all we need to install and create a virtual environment. You can do this by using the following code:
+1. Install OpenCV by running `pip install opencv-python` check out this [installation guide](https://littlebirdelectronics.com.au/guides/165/set-up-opencv-on-raspberry-pi-4) if you have errors
 
-`python3 -m pip install --user virtualenv`
+2. Install mediapipe for Raspberry Pi by running `pip install mediapipe-rpi4`
 
-After installing it we have to create the environment. Make sure you are in your project folder. So for example in a folder called PostureCheck.
+3. Install Twilio by running `pip install twilio`
 
-`python3 -m venv venv`
-
-This will create a folder called venv. Now we have to start up the virtual environment by typing:
-
-`venv\Scripts\activate`
-
-Now that we have a virtual environment we can install the requirements. You can find the requirements.txt in this repository. To run this file, type in cmd the following command:
-
-`pip install -r requirements.txt`
-
-Now that we have installed all the packages and created our own virtual environment, we only have to change a few parameters in the code.
+## Configuration
+Now that we have installed all the packages, we only have to change a few parameters in the code.
 
 There are the 2 scripts in this program:
 - main.py ( in this file you can find all the calculations and UI code for this program)
@@ -34,12 +25,15 @@ Note: if you have 2 cameras on your pc, you might need to change a value in main
 
 Line 45: `cap = cv2.VideoCapture(0)`
 
-## How to run?
+## Usage
 
 Now that everything is set up, you can run the program. Make sure you have your camera plugged in, and position yourself in front of the camera with a perfect side view. 
 
-open cmd in your root folder and type `python3 main.py`
+Run the script using the command `python posture_detection.py`
+The script will begin monitoring the side-view of a person and will calculate the neck and torso inclination. If poor body posture is detected, a text message will be sent to the configured phone number after a certain amount of time.
 
-after having a bad posture for 3 min you will get notified with an sms.
+## Note
+Make sure to use the compatible version of the packages with your python version.
 
-
+## Conclusion
+This project uses Mediapipe and OpenCV to detect poor body posture and alert the user via text message. By using a Raspberry Pi and a webcam, the project is able to monitor the side-view of a person and calculate the neck and torso inclination in real-time.

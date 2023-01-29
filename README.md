@@ -5,22 +5,22 @@ This is the final project for the subject 'Datascience for IoT'. With the help o
 ## Demo
 
 ## Process Outline
-Since I spend a lot of time behind my PC, it is important I keep an eye out on my posture. This is where I got the idea to create something to solve this issue for myself. I started looking at possible solutions and came across the term body pose tracking very quickly. This is for example used for yoga to check if a pose is done correctly, or during workouts to make sure exercises are performed correctly. This was a perfect technology for my idea and so I started reading up on body pose tracking. 
+As I spend significant time on my computer, it's crucial for me to maintain good posture. This led me to come up with an idea to solve this problem for myself. I began exploring potential solutions and came across the concept of body pose tracking. It is commonly used in yoga to ensure proper alignment in poses and during workouts to ensure exercises are done correctly. This technology was an ideal fit for my idea, and so I delved deeper into researching body pose tracking.
 
 ### MediaPipe vs Yolov7
-While reading i came across the names MediaPipe and Yolov7, and decided to use MediaPipe in the end because of the results I found in this [video](https://www.youtube.com/watch?v=hCJIU0pOl5g&ab_channel=LearnOpenCV). 
+During my research on body pose tracking, I encountered the names MediaPipe and Yolov7. After reviewing the results, I ultimately decided to use MediaPipe, as I found it to be more suitable for my project after watching a [video](https://www.youtube.com/watch?v=hCJIU0pOl5g&ab_channel=LearnOpenCV) on it. 
 
 ### OpenCV
-When I was looking for MediaPipe tutorials that included poor posture, I found this page on [OpenCV](https://learnopencv.com/building-a-body-posture-analysis-system-using-mediapipe) that used the technology i wanted, and had a perfect tutorial about the idea I wanted to create. The plan was to get it working on my PC and then move it on the raspberry pi and test it out there. The tutorial was great, but it was focused on video inputs like an mp4 or a mov file. I wanted a live-feed with my webcam and so i started adding code to the tutorial to get it up and running. This was done by adding a while loop and checking if there is someone in the frame. 
+While searching for MediaPipe tutorials that addressed poor posture, I discovered a page on [OpenCV](https://learnopencv.com/building-a-body-posture-analysis-system-using-mediapipe) that utilized the technology I desired and provided an excellent tutorial for the concept I aimed to create. My plan was to first implement it on my PC, and then later move it to a Raspberry Pi. The tutorial was excellent, but it was designed for video inputs such as mp4 or mov files. I wanted a live-feed using my webcam, so I began modifying the tutorial's code to accommodate this.
 
 ### Twilio 
-I decided to add a SMS service to the code so that you get notified when needed. After comparing a few SMS services, I choose Twilio since it had a free trial and a balance to try out with.
+I decided to incorporate an SMS service into the code so that it would send notifications when necessary. After evaluating various SMS services, I chose Twilio, as it offered a free trial and a credit balance to test with.
 
 ### Moving the project to the raspberry PI
-Till now it went pretty smoothly, but the installation on the raspberry pi was definitely harder than expected. After trying to install the python packages, I found out quickly that some of these were not compatible with the Raspberry pi OS, and found out I had to install a different version of the OS called Buster. After installing this OS I got everything installed. 
+So far, the project had progressed smoothly, but installing it on the Raspberry Pi proved to be more challenging than anticipated. Upon attempting to install the required python packages, I quickly discovered that some of them were not compatible with the existing Raspberry Pi OS. I then learned that I had to install a different version of the OS, called Raspbian Buster, in order to proceed. After installing this OS, all necessary packages were successfully installed.
 
 ### Running the program on the raspberry pi 
-When I ran it for the first time, I unfortunatly saw that the frame rate on the camera was very bad. Also there wasa problem with the time of having a bad posture. Normally you would receive a SMS after 10 seconds, but these 10 seconds took almost a whole minute. I figured out that the function to get the FPS of openCV does not work on a live-feed and will always return 30 fps. Which means that it calculates the time with 30 fps while sometimes the FPS was actually 5. This made the time go 6 times slower in the program. This problem was in the end fixed by calculating the FPS myself for every frame. 
+When I first ran the program, I unfortunately discovered that the camera's frame rate was very poor. Additionally, there was an issue with the duration of poor posture. Typically, a SMS would be sent after 10 seconds, however, this 10 seconds was taking almost a full minute. I discovered that the function to get the FPS of OpenCV does not work on a live-feed and will always return 30 fps. This meant that the program was calculating the time with 30 fps, even when the actual FPS was much lower, such as 5. This caused the time to be 6 times slower in the program. I was able to fix this problem by calculating the FPS for each frame individually.
 
 ## Installation
 

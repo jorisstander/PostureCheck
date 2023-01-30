@@ -4,6 +4,8 @@ This is the final project for the subject 'Datascience for IoT'. With the help o
 
 ## Demo
 
+https://user-images.githubusercontent.com/25158146/215510505-edc1ff39-2027-44c7-8737-72e7b663e1f8.mp4
+
 ## Process Outline
 As I spend significant time on my computer, it's crucial for me to maintain good posture. This led me to come up with an idea to solve this problem for myself. I began exploring potential solutions and came across the concept of body pose tracking. It is commonly used in yoga to ensure proper alignment in poses and during workouts to ensure exercises are done correctly. This technology was an ideal fit for my idea, and so I delved deeper into researching body pose tracking.
 

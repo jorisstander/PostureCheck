@@ -60,7 +60,7 @@ Line 45: `cap = cv2.VideoCapture(0)`
 
 Now that everything is set up, you can run the program. Make sure you have your camera plugged in, and position yourself in front of the camera with a perfect side view. 
 
-Run the script using the command `python posture_detection.py`
+Run the script using the command `python main.py`
 The script will begin monitoring the side-view of a person and will calculate the neck and torso inclination. If poor body posture is detected, a text message will be sent to the configured phone number after a certain amount of time.
 
 ## Note

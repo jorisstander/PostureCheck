@@ -5,6 +5,7 @@ This is the final project for the subject 'Datascience for IoT'. With the help o
 ## Demo
 
 https://user-images.githubusercontent.com/25158146/215510505-edc1ff39-2027-44c7-8737-72e7b663e1f8.mp4
+
 This demo demonstrates that excessive neck or torso inclination can trigger the program to send an SMS. A frame is considered bad if neck inclination exceeds 29 degrees or torso inclination exceeds 19 degrees. Based on FPS, the program calculates the duration of poor posture and takes action.
 
 ## Process Outline
